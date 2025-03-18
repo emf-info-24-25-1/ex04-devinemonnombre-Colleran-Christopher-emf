@@ -2,6 +2,8 @@ package ihmsimple.ctrl;
 
 import static ihmsimple.services.ServiceDevine.NOMBRE_INVALIDE;
 
+import java.awt.Color;
+
 import ihmsimple.services.ServiceDevine;
 import ihmsimple.views.View;
 
@@ -49,7 +51,7 @@ public class Controller {
      */
     public void actionDemarrerNouveauJeu() {
         nombre = refServiceDevine.penserAUnNombre();
-        refView.afficherStatus("jeu démarré", null);
+        refView.afficherStatus("Devinez !", Color.yellow);
     }
 
     /**
@@ -59,13 +61,13 @@ public class Controller {
     public void actionDeviner() {
         this.nombreUtilisateur = refView.lireValeurProposee();
         if (nombreUtilisateur == nombre) {
-            refView.afficherStatus("Trouvé", null);
+            refView.afficherStatus("Trouvé", Color.green);
         }
         if (nombreUtilisateur > nombre) {
-            refView.afficherStatus("Trop grand", null);
+            refView.afficherStatus("Trop grand", Color.red);
         }
         if (nombreUtilisateur < nombre) {
-            refView.afficherStatus("Trop petit", null);
+            refView.afficherStatus("Trop petit", Color.red);
         }
     }
 
@@ -74,12 +76,8 @@ public class Controller {
      * Voir le diagramme de séquence pour l'implémentation de cette méthode.
      */
     public void start() {
-
-        actionDemarrerNouveauJeu();
-        while (nombre != nombreUtilisateur) {
-            actionDeviner();
-        }
-        refView.afficherStatus("Vous avez trouvé le nombre !", null);
+        refView.ihmStart();
+        refView.afficherStatus("Jeu pas démarré", Color.yellow);
     }
 
     /**

@@ -14,9 +14,9 @@ public class IhmSimple {
      * @param args arguments de la ligne de commande
      */
     public static void main(String[] args) {
+        Controller refCtrl = new Controller(2, null, null);
         ServiceDevine refServiceDevine = new ServiceDevine();
-        View refView = new View();
-        Controller refCtrl = new Controller(2, refView, refServiceDevine);
+        View refView = new View(refCtrl);
         refCtrl.setRefServiceDevine(refServiceDevine);
         refCtrl.setRefView(refView);
         refView.setRefCtrl(refCtrl);

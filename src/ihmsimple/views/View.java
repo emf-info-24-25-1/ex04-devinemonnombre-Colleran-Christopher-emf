@@ -36,7 +36,7 @@ public class View extends javax.swing.JFrame {
     /**
      * Constructeur de l'ihm.
      */
-    public View() {
+    public View(Controller refCtrl) {
         this.refCtrl = null;
     }
 
