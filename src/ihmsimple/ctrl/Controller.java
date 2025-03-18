@@ -1,5 +1,7 @@
 package ihmsimple.ctrl;
 
+import static ihmsimple.services.ServiceDevine.NOMBRE_INVALIDE;
+
 import ihmsimple.services.ServiceDevine;
 import ihmsimple.views.View;
 
@@ -26,6 +28,8 @@ public class Controller {
      */
     private ServiceDevine refServiceDevine;
 
+    private int nombre;
+
     /**
      * Constructeur du contrôleur. Comme toujours, le travail N°1 consiste à
      * initialiser TOUS nos attributs :-).
@@ -33,10 +37,10 @@ public class Controller {
      * qu’elles valeurs initiales donner. Pour la valeur initiale de l’attribut
      * nombre, utilisez NOMBRE_INVALIDE.
      */
-    public Controller(int nombreUtilisateur,View refView,ServiceDevine refServiceDevine) {
+    public Controller(int nombreUtilisateur, View refView, ServiceDevine refServiceDevine) {
         this.refServiceDevine = refServiceDevine;
         this.refView = refView;
-        nombreUtilisateur = NOMBRE_INVALIDE;
+        this.nombreUtilisateur = NOMBRE_INVALIDE;
     }
 
     /**
@@ -44,7 +48,8 @@ public class Controller {
      * Voir le diagramme de séquence pour l'implémentation de cette méthode.
      */
     public void actionDemarrerNouveauJeu() {
-        // VOTRE CODE ICI...
+        nombre = refServiceDevine.penserAUnNombre();
+        refView.afficherStatus("jeu démarré", null);
     }
 
     /**
@@ -52,7 +57,16 @@ public class Controller {
      * Voir le diagramme de séquence pour l'implémentation de cette méthode.
      */
     public void actionDeviner() {
-        // VOTRE CODE ICI...
+        this.nombreUtilisateur = refView.lireValeurProposee();
+        if (nombreUtilisateur == nombre) {
+            refView.afficherStatus("Trouvé", null);
+        }
+        if (nombreUtilisateur > nombre) {
+            refView.afficherStatus("Trop grand", null);
+        }
+        if (nombreUtilisateur < nombre) {
+            refView.afficherStatus("Trop petit", null);
+        }
     }
 
     /**
@@ -60,7 +74,12 @@ public class Controller {
      * Voir le diagramme de séquence pour l'implémentation de cette méthode.
      */
     public void start() {
-        // VOTRE CODE ICI...
+
+        actionDemarrerNouveauJeu();
+        while (nombre != nombreUtilisateur) {
+            actionDeviner();
+        }
+        refView.afficherStatus("Vous avez trouvé le nombre !", null);
     }
 
     /**
